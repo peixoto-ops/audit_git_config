@@ -1,42 +1,33 @@
-# audit_git_config
+# 🛡️ Audit Git Config
 
-Relatório automático de auditoria das configurações do Git. Identifica onde cada configuração está definida (origem), detecta duplicatas exatas e copia o relatório para a área de transferência.
+> **Ferramenta de auditoria automatizada para higiene de configurações Git e conformidade com o princípio DRY.**
 
-Autor: Peixoto-Ops  
-Linguagem: Shell (Bash)  
-Dependências: git, xclip (para copiar ao clipboard; alternativas descritas abaixo)  
-Licença: MIT
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Bash](https://img.shields.io/badge/Language-Bash-blue.svg)
+![Status](https://img.shields.io/badge/Status-Active-green.svg)
 
-## Sumário
-- Descrição
-- Requisitos
-- Instalação
-- Uso
-- Exemplos e saída esperada
-- Erros comuns / Troubleshooting
-- Contribuição
-- Licença
+![Fluxo Lógico de Auditoria](resources/draft_image.png)
 
-## Descrição
-O script `audit_git_config.sh` gera um relatório com:
-- Mapeamento de origem das configurações (`git config --list --show-origin`)
-- Detecção de linhas duplicadas exatas nas configurações (`git config --list | sort | uniq -d`)
+## 📋 Visão Geral
 
-O relatório é mostrado no terminal e copiado para a área de transferência (clipboard) após remover as sequências de cor ANSI.
+O **Audit Git Config** é um script shell desenvolvido para resolver o problema de configurações "sombra" ou redundantes que se acumulam nos diferentes escopos do Git (`System`, `Global`, `Local`).
 
-## Requisitos
-- git (>= 2.x)
-- Bash
-- xclip (Linux). Para macOS use `pbcopy` e para Windows (Git Bash) use `clip`.
+Seu objetivo principal é garantir a integridade da configuração, identificando duplicatas que violam o princípio **DRY (Don't Repeat Yourself)** e facilitando a depuração.
 
-Instalação do xclip (exemplos):
-- Debian/Ubuntu: `sudo apt update && sudo apt install -y xclip`
-- Fedora: `sudo dnf install -y xclip`
-- Arch: `sudo pacman -S xclip`
+## 🚀 Funcionalidades
 
-## Instalação / Preparação
-1. Salve o script `audit_git_config.sh` no diretório do projeto (se ainda não existir).
-2. Torne executável:
-   ```bash
-   chmod +x audit_git_config.sh
-   ```
+- **📍 Mapeamento de Origem:** Rastreia exatamente em qual arquivo (`/etc/gitconfig`, `~/.gitconfig`, `.git/config`) cada variável está definida usando `--show-origin`.
+- **🔍 Detecção de Redundância:** Algoritmo que isola e alerta sobre linhas de configuração duplicadas exatas.
+- **📋 Clipboard I/O:** Gera o relatório no `stdout` e, simultaneamente, copia a versão limpa (sem códigos de cor ANSI) para a área de transferência (requer `xclip`).
+- **📄 Documentação Automática:** Inclui gerador de documentação (`gerador_docs.sh`) para padronização rápida de novos repositórios.
+
+## 📂 Estrutura do Projeto
+
+```text
+.
+├── audit_git_config.sh    # Core: Script de auditoria e geração de relatório
+├── gerador_docs.sh        # Util: Gera README, LICENSE e arquivos padrão
+├── resources/             # Assets: Imagens e diagramas
+│   └── draft_image.png    # Visual Abstract: Fluxo Lógico
+├── README.md              # Doc: Este arquivo
+└── LICENSE                # Legal: Licença MIT
